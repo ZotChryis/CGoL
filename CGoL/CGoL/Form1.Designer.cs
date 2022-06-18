@@ -41,6 +41,11 @@ namespace CGoL
             this.PresetLabel = new System.Windows.Forms.Label();
             this.BlinkersButton = new System.Windows.Forms.Button();
             this.AcornButton = new System.Windows.Forms.Button();
+            this.BigBlinkersButton = new System.Windows.Forms.Button();
+            this.BigSimulationTimer = new System.Windows.Forms.Timer(this.components);
+            this.BigBoardLabel = new System.Windows.Forms.Label();
+            this.BigAcornButton = new System.Windows.Forms.Button();
+            this.PromptButton = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.RenderTarget)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.SizePicker)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.StepTimePicker)).BeginInit();
@@ -53,7 +58,7 @@ namespace CGoL
             | System.Windows.Forms.AnchorStyles.Right)));
             this.RenderTarget.Location = new System.Drawing.Point(95, 1);
             this.RenderTarget.Name = "RenderTarget";
-            this.RenderTarget.Size = new System.Drawing.Size(882, 478);
+            this.RenderTarget.Size = new System.Drawing.Size(882, 541);
             this.RenderTarget.TabIndex = 0;
             this.RenderTarget.TabStop = false;
             this.RenderTarget.SizeChanged += new System.EventHandler(this.RenderTarget_SizeChanged);
@@ -172,11 +177,58 @@ namespace CGoL
             this.AcornButton.UseVisualStyleBackColor = true;
             this.AcornButton.Click += new System.EventHandler(this.AcornButton_Click);
             // 
+            // BigBlinkersButton
+            // 
+            this.BigBlinkersButton.Location = new System.Drawing.Point(12, 364);
+            this.BigBlinkersButton.Name = "BigBlinkersButton";
+            this.BigBlinkersButton.Size = new System.Drawing.Size(74, 23);
+            this.BigBlinkersButton.TabIndex = 18;
+            this.BigBlinkersButton.Text = "Blinkers";
+            this.BigBlinkersButton.UseVisualStyleBackColor = true;
+            this.BigBlinkersButton.Click += new System.EventHandler(this.BigBlinkersButton_Click);
+            // 
+            // BigSimulationTimer
+            // 
+            this.BigSimulationTimer.Tick += new System.EventHandler(this.BigSimulationTimer_Tick);
+            // 
+            // BigBoardLabel
+            // 
+            this.BigBoardLabel.AutoSize = true;
+            this.BigBoardLabel.Location = new System.Drawing.Point(20, 337);
+            this.BigBoardLabel.Name = "BigBoardLabel";
+            this.BigBoardLabel.Size = new System.Drawing.Size(50, 13);
+            this.BigBoardLabel.TabIndex = 19;
+            this.BigBoardLabel.Text = "BigBoard";
+            // 
+            // BigAcornButton
+            // 
+            this.BigAcornButton.Location = new System.Drawing.Point(12, 393);
+            this.BigAcornButton.Name = "BigAcornButton";
+            this.BigAcornButton.Size = new System.Drawing.Size(74, 23);
+            this.BigAcornButton.TabIndex = 22;
+            this.BigAcornButton.Text = "Acorn";
+            this.BigAcornButton.UseVisualStyleBackColor = true;
+            this.BigAcornButton.Click += new System.EventHandler(this.BigAcornButton_Click);
+            // 
+            // PromptButton
+            // 
+            this.PromptButton.Location = new System.Drawing.Point(12, 489);
+            this.PromptButton.Name = "PromptButton";
+            this.PromptButton.Size = new System.Drawing.Size(74, 23);
+            this.PromptButton.TabIndex = 23;
+            this.PromptButton.Text = "Prompt";
+            this.PromptButton.UseVisualStyleBackColor = true;
+            this.PromptButton.Click += new System.EventHandler(this.PromptButton_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(977, 480);
+            this.ClientSize = new System.Drawing.Size(977, 542);
+            this.Controls.Add(this.PromptButton);
+            this.Controls.Add(this.BigAcornButton);
+            this.Controls.Add(this.BigBoardLabel);
+            this.Controls.Add(this.BigBlinkersButton);
             this.Controls.Add(this.AcornButton);
             this.Controls.Add(this.BlinkersButton);
             this.Controls.Add(this.PresetLabel);
@@ -211,6 +263,11 @@ namespace CGoL
         private System.Windows.Forms.Label PresetLabel;
         private System.Windows.Forms.Button BlinkersButton;
         private System.Windows.Forms.Button AcornButton;
+        private System.Windows.Forms.Button BigBlinkersButton;
+        private System.Windows.Forms.Timer BigSimulationTimer;
+        private System.Windows.Forms.Label BigBoardLabel;
+        private System.Windows.Forms.Button BigAcornButton;
+        private System.Windows.Forms.Button PromptButton;
     }
 }
 

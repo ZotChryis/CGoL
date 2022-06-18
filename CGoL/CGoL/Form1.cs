@@ -3,6 +3,8 @@ using System;
 using System.Drawing;
 using System.Windows.Forms;
 using System.Collections.Generic;
+using System.Runtime.InteropServices;
+using CGoL.BigSim;
 
 namespace CGoL
 {
@@ -14,7 +16,10 @@ namespace CGoL
         /// <summary>
         /// The simulated board of CGoL that is drawn to render target.
         /// </summary>
-        private Board board;
+        private Board Board;
+
+
+        private BigBoard BigBoard;
 
         public Form1()
         {
@@ -27,7 +32,7 @@ namespace CGoL
         /// </summary>
         private void Reset()
         {
-            board = new Board(RenderTarget.Width, RenderTarget.Height, (int)SizePicker.Value, true);
+            Board = new Board(RenderTarget.Width, RenderTarget.Height, (int)SizePicker.Value, true);
             Draw();
         }
 
@@ -74,13 +79,13 @@ namespace CGoL
                 }
 
                 //  Determine offsets so that the resulting simulation is centered in the board
-                offsetX = (board.Columns - (maxX - minX)) / 2;
-                offsetY = (board.Rows - (maxY - minY)) / 2;
+                offsetX = (Board.Columns - (maxX - minX)) / 2;
+                offsetY = (Board.Rows - (maxY - minY)) / 2;
             }
 
             foreach (Board.CellLocation item in liveCellTuples)
             {
-                board.Cells[item.x + offsetX, item.y + offsetY].IsAlive = true;
+                Board.Cells[item.x + offsetX, item.y + offsetY].IsAlive = true;
             }
         }
 
@@ -90,22 +95,22 @@ namespace CGoL
         private void Draw()
         {
             using (var fillBrush = new SolidBrush(Color.Black))
-            using (var bitmap = new Bitmap(board.Width, board.Height))
+            using (var bitmap = new Bitmap(Board.Width, Board.Height))
             using (var render = Graphics.FromImage(bitmap))
             {
                 //  Make the background a solid color
                 render.Clear(Color.GhostWhite);
 
                 //  Determine the squares to draw on top
-                Size cellSize = new Size(board.CellSize, board.CellSize);
-                for (int col = 0; col < board.Columns; col++)
+                Size cellSize = new Size(Board.CellSize, Board.CellSize);
+                for (int col = 0; col < Board.Columns; col++)
                 {
-                    for (int row = 0; row < board.Rows; row++)
+                    for (int row = 0; row < Board.Rows; row++)
                     {
-                        Cell cell = board.Cells[col, row];
+                        Cell cell = Board.Cells[col, row];
                         if (cell.IsAlive)
                         {
-                            Point cellLocation = new Point(col * board.CellSize, row * board.CellSize);
+                            Point cellLocation = new Point(col * Board.CellSize, row * Board.CellSize);
                             Rectangle cellRect = new Rectangle(cellLocation, cellSize);
                             render.FillRectangle(fillBrush, cellRect);
                         }
@@ -234,7 +239,7 @@ namespace CGoL
         /// </summary>
         private void SimulationTimer_Tick(object sender, EventArgs e)
         {
-            board.Step();
+            Board.Step();
             Draw();
         }
 
@@ -262,6 +267,67 @@ namespace CGoL
         private void SizePicker_ValueChanged(object sender, EventArgs e)
         {
             Reset();
+        }
+
+        private void BigBlinkersButton_Click(object sender, EventArgs e)
+        {
+            BigBoard = new BigBoard();
+
+            BigBoard.AddCell(0, 0);
+            BigBoard.AddCell(0, 1);
+            BigBoard.AddCell(0, 2);
+            BigBoard.AddCell(4, 0);
+            BigBoard.AddCell(4, 1);
+            BigBoard.AddCell(4, 2);
+            BigBoard.AddCell(8, 0);
+            BigBoard.AddCell(8, 1);
+            BigBoard.AddCell(8, 2);
+
+            BigSimulationTimer.Enabled = true;
+        }
+
+        private void BigSimulationTimer_Tick(object sender, EventArgs e)
+        {
+            Console.WriteLine("BigBoard:");
+            Console.WriteLine(BigBoard.ToString());
+            BigBoard.PreStep();
+            BigBoard.Step();
+
+            if (BigBoard.GetLiveCellCount() == 0)
+            {
+                Console.WriteLine("All life is gone.");
+                BigSimulationTimer.Enabled = false;
+            }
+        }
+
+        private void BigAcornButton_Click(object sender, EventArgs e)
+        {
+            BigBoard = new BigBoard();
+
+            BigBoard.AddCell(2, 0);
+            BigBoard.AddCell(4, 1);
+            BigBoard.AddCell(1, 2);
+            BigBoard.AddCell(2, 2);
+            BigBoard.AddCell(5, 2);
+            BigBoard.AddCell(6, 2);
+            BigBoard.AddCell(7, 2);
+
+            BigSimulationTimer.Enabled = true;
+        }
+
+        private void PromptButton_Click(object sender, EventArgs e)
+        {
+            BigBoard = new BigBoard();
+
+            BigBoard.AddCell(0, 1);
+            BigBoard.AddCell(1, 2);
+            BigBoard.AddCell(2, 0);
+            BigBoard.AddCell(2, 1);
+            BigBoard.AddCell(2, 2);
+            BigBoard.AddCell(-2000000000000, -2000000000000);
+            BigBoard.AddCell(-2000000000001, -2000000000001);
+
+            BigSimulationTimer.Enabled = true;
         }
     }
 }

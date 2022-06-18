@@ -17,7 +17,10 @@ namespace CGoL.Sim
         /// </summary>
         private bool WillBeAlive;
 
-        public List<Cell> neighbors = new List<Cell>();
+        /// <summary>
+        /// The neighbors of this cell. There will only ever be 8.
+        /// </summary>
+        public List<Cell> neighbors = new List<Cell>(8);
 
         /// <summary>
         /// Called when the simulation is moved forward. Guaranteed to be called on all cells before the 
@@ -32,9 +35,9 @@ namespace CGoL.Sim
             // 4) Any dead cell with exactly three live neighbours becomes a live cell, as if by reproduction.
 
             int livingNeighbors = 0;
-            foreach (Cell item in neighbors)
+            foreach (Cell cell in neighbors)
             {
-                if (!item.IsAlive)
+                if (!cell.IsAlive)
                 {
                     continue;
                 }
