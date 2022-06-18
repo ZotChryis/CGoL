@@ -61,6 +61,21 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SparseCollections\ComparableTuple2.cs" />
+    <Compile Include="SparseCollections\ComparableTuple3.cs" />
+    <Compile Include="SparseCollections\ComparableTuple4.cs" />
+    <Compile Include="SparseCollections\ComparableTuple5.cs" />
+    <Compile Include="SparseCollections\ComparableTuple6.cs" />
+    <Compile Include="SparseCollections\ComparableTuple7.cs" />
+    <Compile Include="SparseCollections\ComparableTuple8.cs" />
+    <Compile Include="SparseCollections\Sparse2DMatrix.cs" />
+    <Compile Include="SparseCollections\Sparse3DMatrix.cs" />
+    <Compile Include="SparseCollections\Sparse4DMatrix.cs" />
+    <Compile Include="SparseCollections\Sparse5DMatrix.cs" />
+    <Compile Include="SparseCollections\Sparse6DMatrix.cs" />
+    <Compile Include="SparseCollections\Sparse7DMatrix.cs" />
+    <Compile Include="SparseCollections\Sparse8DMatrix.cs" />
+    <Compile Include="SparseCollections\SparseArray.cs" />
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
