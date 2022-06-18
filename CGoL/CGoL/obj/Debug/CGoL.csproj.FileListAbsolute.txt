@@ -1,0 +1,10 @@
+C:\Users\navac\OneDrive\Documents\Prototypes\CGoL\CGoL\CGoL\obj\Debug\CGoL.csproj.AssemblyReference.cache
+C:\Users\navac\OneDrive\Documents\Prototypes\CGoL\CGoL\CGoL\obj\Debug\CGoL.Properties.Resources.resources
+C:\Users\navac\OneDrive\Documents\Prototypes\CGoL\CGoL\CGoL\obj\Debug\CGoL.csproj.GenerateResource.cache
+C:\Users\navac\OneDrive\Documents\Prototypes\CGoL\CGoL\CGoL\obj\Debug\CGoL.csproj.CoreCompileInputs.cache
+C:\Users\navac\OneDrive\Documents\Prototypes\CGoL\CGoL\CGoL\bin\Debug\CGoL.exe.config
+C:\Users\navac\OneDrive\Documents\Prototypes\CGoL\CGoL\CGoL\bin\Debug\CGoL.exe
+C:\Users\navac\OneDrive\Documents\Prototypes\CGoL\CGoL\CGoL\bin\Debug\CGoL.pdb
+C:\Users\navac\OneDrive\Documents\Prototypes\CGoL\CGoL\CGoL\obj\Debug\CGoL.Form1.resources
+C:\Users\navac\OneDrive\Documents\Prototypes\CGoL\CGoL\CGoL\obj\Debug\CGoL.exe
+C:\Users\navac\OneDrive\Documents\Prototypes\CGoL\CGoL\CGoL\obj\Debug\CGoL.pdb
