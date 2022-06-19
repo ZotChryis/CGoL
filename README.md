@@ -31,3 +31,4 @@ This project has two implementations of Conway's Game of Life and was created in
 - GUI support for initial state construction.
 - GUI support for save/load of initial states.
   - Requires a serializable version of the input data, currently there is none supported.
+- Parallelization of lengthy calls like BidBoard.PreStepCells() and BigBoard.EvaluateCell() functions
