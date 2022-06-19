@@ -158,7 +158,7 @@ namespace CGoL
 
         // Example patterns taken from: https://en.wikipedia.org/wiki/Conway%27s_Game_of_Life#Examples_of_patterns
         // TODO: Make a file format that can be serialized for patterns
-        // TODO: Make a GUI editor for making this file format
+        // TODO: Make a GUI editor for making starting states with save/load capability
         private void BlinkersButton_Click(object sender, EventArgs e)
         {
             List<Board.CellLocation> liveCells = new List<Board.CellLocation>()
@@ -271,7 +271,6 @@ namespace CGoL
 
         /// <summary>
         /// Resets the simulation whenever the render target bounds are changed.
-        /// TODO: Make this non-disruptive by calculating the new image instead of forcing a reset.
         /// </summary>
         private void RenderTarget_SizeChanged(object sender, EventArgs e)
         {

@@ -70,7 +70,6 @@ namespace CGoL.BigSim
             return sb.ToString();
         }
 
-        // TODO: Reduce this to one signature
         /// <summary>
         /// Adds a new living cell at the given (x, y) coordinate to the simulation.
         /// </summary>

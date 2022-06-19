@@ -1,6 +1,6 @@
 ﻿namespace CGoL.BigSim
 {
-    // TODO: This can be a base that Cell inherets from
+    // TODO: This can be a base class that Cell.cs inherits from
 
     /// <summary>
     /// Representation of a single element in the big simulation. 

@@ -37,9 +37,10 @@ namespace CGoL
      *      Day 2:
      *      
      *      Spent an hour the second day (total so far being 6.5 hours) cleaning up the BigBoard's SparseMatrix2D 
-     *      implementation. I'm at a point where things are working but there could be a lot more done. Seeing as
+     *      implementation. I'm at a point where things are working but there could be a lot more done...but seeing as
      *      I want to keep this project under 1 working day (8 hours), I will transition into making some documentation 
-     *      for what is here.
+     *      for what is here. 
+     *      See: https://github.com/ZotChryis/CGoL
      *      
      */
 
