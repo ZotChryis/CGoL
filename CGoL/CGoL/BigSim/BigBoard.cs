@@ -1,8 +1,8 @@
-﻿using System.Collections.Generic;
+﻿using SparseCollections;
+using System.Collections.Generic;
 using System.Text;
 
 // TODO: Cleanup
-// TODO: support SparseArrays?
 namespace CGoL.BigSim
 {
     /// <summary>
@@ -12,8 +12,9 @@ namespace CGoL.BigSim
     public class BigBoard
     {
         Dictionary<long, Dictionary<long, BigCell>> Cells;
-
         List<BigCell> CellsToAdd = new List<BigCell>();
+
+        Sparse2DMatrix<long, long, BigCell> SparseCells;
 
         /// <summary>
         /// Creates a new big board. We assume the Int64 space.
@@ -21,12 +22,30 @@ namespace CGoL.BigSim
         public BigBoard()
         {
             Cells = new Dictionary<long, Dictionary<long, BigCell>>();
+            SparseCells = new Sparse2DMatrix<long, long, BigCell>();
         }
 
         public string ToString()
         {
             StringBuilder sb = new StringBuilder();
             sb.AppendLine("Live Cells:");
+
+            foreach (KeyValuePair<ComparableTuple2<long, long>, BigCell> entry in SparseCells)
+            {
+                if (!entry.Value.IsAlive)
+                {
+                    continue;
+                }
+
+                long x = 0;
+                long y = 0;
+                SparseCells.SeparateCombinedKeys(entry.Key, ref x, ref y);
+
+                sb.Append("X: " + x);
+                sb.AppendLine(", Y: " + y);
+            }
+
+            /*
             foreach (KeyValuePair<long, Dictionary<long, BigCell>> entry in Cells)
             {
                 foreach (KeyValuePair<long, BigCell> innerEntry in entry.Value)
@@ -42,12 +61,14 @@ namespace CGoL.BigSim
                     sb.AppendLine(innerEntry.Key.ToString());
                 }
             }
+            */
 
             return sb.ToString();
         }
 
         public void AddCell(long x, long y)
         {
+            /*
             BigCell bigCell = new BigCell(x, y);
 
             if (!Cells.ContainsKey(x))
@@ -59,10 +80,14 @@ namespace CGoL.BigSim
             {
                 Cells[x].Add(y, bigCell);
             }
+            */
+
+            SparseCells[x, y] = new BigCell(x, y);
         }
 
         public void AddCell(BigCell bigCell)
         {
+            /*
             if (!Cells.ContainsKey(bigCell.x))
             {
                 Cells.Add(bigCell.x, new Dictionary<long, BigCell>());
@@ -73,12 +98,16 @@ namespace CGoL.BigSim
                 Cells[bigCell.x].Add(bigCell.y, null);
             }
             Cells[bigCell.x][bigCell.y] = bigCell;
+            */
+
+            SparseCells[bigCell.x, bigCell.y] = bigCell;
         }
 
         public int GetLiveCellCount()
         {
             int liveCells = 0;
-            
+
+            /*
             foreach (KeyValuePair<long, Dictionary<long, BigCell>> entry in Cells)
             {
                 foreach (KeyValuePair<long, BigCell> innerEntry in entry.Value)
@@ -91,12 +120,23 @@ namespace CGoL.BigSim
                     liveCells++;
                 }
             }
+            */
+
+            foreach (KeyValuePair<ComparableTuple2<long, long>, BigCell> entry in SparseCells)
+            {
+                if (!entry.Value.IsAlive)
+                {
+                    continue;
+                }
+                liveCells++;
+            }
 
             return liveCells;
         }
 
         public BigCell GetCell(long x, long y)
         {
+            /*
             if (!Cells.ContainsKey(x))
             {
                 return null;
@@ -106,12 +146,16 @@ namespace CGoL.BigSim
             {
                 return null;
             }
-
+            
             return Cells[x][y];
+            */
+
+            return SparseCells[x, y];
         }
 
         public BigCell GetCellToAdd(long x, long y)
         {
+            // TODO: Can this go away now with sparse arrays?
             foreach (BigCell cell in CellsToAdd)
             {
                 if (cell.x == x && cell.y == y)
@@ -156,6 +200,50 @@ namespace CGoL.BigSim
 
         public int GetLiveNeighborCount(long x, long y)
         {
+            BigCell topLeft = SparseCells[x - 1, y - 1];
+            BigCell topCenter = SparseCells[x, y - 1];
+            BigCell topRight = SparseCells[x + 1, y - 1];
+            BigCell left = SparseCells[x - 1, y];
+            BigCell right = SparseCells[x + 1, y];
+            BigCell bottomLeft = SparseCells[x - 1, y + 1];
+            BigCell bottomCenter = SparseCells[x, y + 1];
+            BigCell bottomRight = SparseCells[x + 1, y + 1];
+
+            int neighbors = 0;
+            if (topLeft != null && topLeft.IsAlive)
+            {
+                neighbors++;
+            }
+            if (topCenter != null && topCenter.IsAlive)
+            {
+                neighbors++;
+            }
+            if (topRight != null && topRight.IsAlive)
+            {
+                neighbors++;
+            }
+            if (left != null && left.IsAlive)
+            {
+                neighbors++;
+            }
+            if (right != null && right.IsAlive)
+            {
+                neighbors++;
+            }
+            if (bottomLeft != null && bottomLeft.IsAlive)
+            {
+                neighbors++;
+            }
+            if (bottomCenter != null && bottomCenter.IsAlive)
+            {
+                neighbors++;
+            }
+            if (bottomRight != null && bottomRight.IsAlive)
+            {
+                neighbors++;
+            }
+
+            /*
             // TODO: Clean up this function to be less nested
             int neighbors = 0;
             if (Cells.ContainsKey(x))
@@ -226,12 +314,14 @@ namespace CGoL.BigSim
                     }
                 }
             }
+            */
 
             return neighbors;
         }
 
         public void PreStep()
         {
+            /*
             foreach (KeyValuePair<long, Dictionary<long, BigCell>> entry in Cells)
             {
                 foreach (KeyValuePair<long, BigCell> innerEntry in entry.Value)
@@ -252,10 +342,39 @@ namespace CGoL.BigSim
                     EvaluateIfDead(innerEntry.Value.x + 1, innerEntry.Value.y + 1);
                 }
             }
+            */
+
+            foreach (KeyValuePair<ComparableTuple2<long, long>, BigCell> entry in SparseCells)
+            {
+                long x = 0;
+                long y = 0;
+                SparseCells.SeparateCombinedKeys(entry.Key, ref x, ref y);
+
+                //  Figure out the state for the current living cell
+                EvaluateIfAlive(x, y);
+
+                //  Find any neighboring dead cell and try to recessitate it!
+                EvaluateIfDead(x - 1, y - 1);
+                EvaluateIfDead(x - 1, y);
+                EvaluateIfDead(x - 1, y + 1);
+
+                EvaluateIfDead(x, y - 1);
+                EvaluateIfDead(x, y + 1);
+
+                EvaluateIfDead(x + 1, y - 1);
+                EvaluateIfDead(x + 1, y);
+                EvaluateIfDead(x + 1, y + 1);
+            }
         }
 
         public void Step()
         {
+            foreach (KeyValuePair<ComparableTuple2<long, long>, BigCell> entry in SparseCells)
+            {
+                entry.Value.IsAlive = entry.Value.WillBeAlive;
+            }
+
+            /*
             foreach (KeyValuePair<long, Dictionary<long, BigCell>> entry in Cells)
             {
                 foreach (KeyValuePair<long, BigCell> innerEntry in entry.Value)
@@ -263,6 +382,7 @@ namespace CGoL.BigSim
                     innerEntry.Value.IsAlive = innerEntry.Value.WillBeAlive;
                 }
             }
+            */
 
             foreach (BigCell cellToAdd in CellsToAdd)
             {
