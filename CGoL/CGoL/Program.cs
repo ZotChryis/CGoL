@@ -27,7 +27,7 @@ namespace CGoL
      *      We can clean up dead cells to alleviate this concern at the cost of performance. Maybe only do this on 
      *      every 10th generation or so?
      *      
-     *      Thoughts nearing the 5 hour mark:
+     *      Thoughts nearing the 5.5 hour mark:
      *      Is there a cleaner way to keep these dictionary records of only live cells? The only thing that I could
      *      come up with was using Sparse Arrays, which are essentially just dictionaries behind the scenes. They are
      *      not something I normally use, and .NET/MSDN doesn't have an officially supported data structure. I
@@ -36,7 +36,10 @@ namespace CGoL
      *      
      *      Day 2:
      *      
-     *      Started the second day spending some time cleaning up the BigBoard's SparseMatrix2D implementation.
+     *      Spent an hour the second day (total so far being 6.5 hours) cleaning up the BigBoard's SparseMatrix2D 
+     *      implementation. I'm at a point where things are working but there could be a lot more done. Seeing as
+     *      I want to keep this project under 1 working day (8 hours), I will transition into making some documentation 
+     *      for what is here.
      *      
      */
 

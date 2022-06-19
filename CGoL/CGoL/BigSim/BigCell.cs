@@ -1,26 +1,17 @@
 ﻿namespace CGoL.BigSim
 {
+    // TODO: This can be a base that Cell inherets from
+
     /// <summary>
     /// Representation of a single element in the big simulation. 
     /// </summary>
     public class BigCell
     {
-        public BigCell(long x, long y)
+        public BigCell()
         {
-            this.x = x;
-            this.y = y;
             IsAlive = true;
+            WillBeAlive = false;
         }
-
-        /// <summary>
-        /// The X location of this cell.
-        /// </summary>
-        public long x;
-
-        /// <summary>
-        /// The Y location of this cell.
-        /// </summary>
-        public long y;
 
         /// <summary>
         /// State of the cell's curent living status.
