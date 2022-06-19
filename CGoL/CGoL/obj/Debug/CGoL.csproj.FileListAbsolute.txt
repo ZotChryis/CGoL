@@ -8,3 +8,6 @@ C:\Users\navac\OneDrive\Documents\Prototypes\CGoL\CGoL\CGoL\bin\Debug\CGoL.pdb
 C:\Users\navac\OneDrive\Documents\Prototypes\CGoL\CGoL\CGoL\obj\Debug\CGoL.Form1.resources
 C:\Users\navac\OneDrive\Documents\Prototypes\CGoL\CGoL\CGoL\obj\Debug\CGoL.exe
 C:\Users\navac\OneDrive\Documents\Prototypes\CGoL\CGoL\CGoL\obj\Debug\CGoL.pdb
+C:\Users\navac\OneDrive\Documents\Prototypes\CGoL\CGoL\CGoL\bin\Debug\JetBrains.Annotations.dll
+C:\Users\navac\OneDrive\Documents\Prototypes\CGoL\CGoL\CGoL\bin\Debug\JetBrains.Annotations.xml
+C:\Users\navac\OneDrive\Documents\Prototypes\CGoL\CGoL\CGoL\obj\Debug\CGoL.csproj.CopyComplete

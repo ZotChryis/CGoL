@@ -31,8 +31,6 @@ namespace CGoL
         {
             this.components = new System.ComponentModel.Container();
             this.RenderTarget = new System.Windows.Forms.PictureBox();
-            this.SizePicker = new System.Windows.Forms.NumericUpDown();
-            this.SizeLabel = new System.Windows.Forms.Label();
             this.SimulationTimer = new System.Windows.Forms.Timer(this.components);
             this.StepTimeLabel = new System.Windows.Forms.Label();
             this.StepTimePicker = new System.Windows.Forms.NumericUpDown();
@@ -42,12 +40,10 @@ namespace CGoL
             this.BlinkersButton = new System.Windows.Forms.Button();
             this.AcornButton = new System.Windows.Forms.Button();
             this.BigBlinkersButton = new System.Windows.Forms.Button();
-            this.BigSimulationTimer = new System.Windows.Forms.Timer(this.components);
             this.BigBoardLabel = new System.Windows.Forms.Label();
             this.BigAcornButton = new System.Windows.Forms.Button();
             this.PromptButton = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.RenderTarget)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.SizePicker)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.StepTimePicker)).BeginInit();
             this.SuspendLayout();
             // 
@@ -63,43 +59,15 @@ namespace CGoL
             this.RenderTarget.TabStop = false;
             this.RenderTarget.SizeChanged += new System.EventHandler(this.RenderTarget_SizeChanged);
             // 
-            // SizePicker
-            // 
-            this.SizePicker.Location = new System.Drawing.Point(15, 24);
-            this.SizePicker.Minimum = new decimal(new int[] {
-            1,
-            0,
-            0,
-            0});
-            this.SizePicker.Name = "SizePicker";
-            this.SizePicker.Size = new System.Drawing.Size(53, 20);
-            this.SizePicker.TabIndex = 1;
-            this.SizePicker.Value = new decimal(new int[] {
-            10,
-            0,
-            0,
-            0});
-            this.SizePicker.ValueChanged += new System.EventHandler(this.SizePicker_ValueChanged);
-            // 
-            // SizeLabel
-            // 
-            this.SizeLabel.AutoSize = true;
-            this.SizeLabel.Location = new System.Drawing.Point(12, 8);
-            this.SizeLabel.Name = "SizeLabel";
-            this.SizeLabel.Size = new System.Drawing.Size(50, 13);
-            this.SizeLabel.TabIndex = 2;
-            this.SizeLabel.Text = "Cell Size:";
-            // 
             // SimulationTimer
             // 
             this.SimulationTimer.Enabled = true;
-            this.SimulationTimer.Interval = 30;
             this.SimulationTimer.Tick += new System.EventHandler(this.SimulationTimer_Tick);
             // 
             // StepTimeLabel
             // 
             this.StepTimeLabel.AutoSize = true;
-            this.StepTimeLabel.Location = new System.Drawing.Point(12, 57);
+            this.StepTimeLabel.Location = new System.Drawing.Point(20, 11);
             this.StepTimeLabel.Name = "StepTimeLabel";
             this.StepTimeLabel.Size = new System.Drawing.Size(58, 13);
             this.StepTimeLabel.TabIndex = 8;
@@ -107,9 +75,9 @@ namespace CGoL
             // 
             // StepTimePicker
             // 
-            this.StepTimePicker.Location = new System.Drawing.Point(15, 73);
+            this.StepTimePicker.Location = new System.Drawing.Point(23, 27);
             this.StepTimePicker.Maximum = new decimal(new int[] {
-            5000,
+            3000,
             0,
             0,
             0});
@@ -122,7 +90,7 @@ namespace CGoL
             this.StepTimePicker.Size = new System.Drawing.Size(53, 20);
             this.StepTimePicker.TabIndex = 9;
             this.StepTimePicker.Value = new decimal(new int[] {
-            30,
+            100,
             0,
             0,
             0});
@@ -130,7 +98,7 @@ namespace CGoL
             // 
             // GliderButton
             // 
-            this.GliderButton.Location = new System.Drawing.Point(12, 194);
+            this.GliderButton.Location = new System.Drawing.Point(12, 133);
             this.GliderButton.Name = "GliderButton";
             this.GliderButton.Size = new System.Drawing.Size(74, 23);
             this.GliderButton.TabIndex = 12;
@@ -140,7 +108,7 @@ namespace CGoL
             // 
             // GunButton
             // 
-            this.GunButton.Location = new System.Drawing.Point(12, 223);
+            this.GunButton.Location = new System.Drawing.Point(12, 162);
             this.GunButton.Name = "GunButton";
             this.GunButton.Size = new System.Drawing.Size(74, 23);
             this.GunButton.TabIndex = 14;
@@ -151,7 +119,7 @@ namespace CGoL
             // PresetLabel
             // 
             this.PresetLabel.AutoSize = true;
-            this.PresetLabel.Location = new System.Drawing.Point(26, 120);
+            this.PresetLabel.Location = new System.Drawing.Point(26, 59);
             this.PresetLabel.Name = "PresetLabel";
             this.PresetLabel.Size = new System.Drawing.Size(42, 13);
             this.PresetLabel.TabIndex = 15;
@@ -159,7 +127,7 @@ namespace CGoL
             // 
             // BlinkersButton
             // 
-            this.BlinkersButton.Location = new System.Drawing.Point(12, 136);
+            this.BlinkersButton.Location = new System.Drawing.Point(12, 75);
             this.BlinkersButton.Name = "BlinkersButton";
             this.BlinkersButton.Size = new System.Drawing.Size(74, 23);
             this.BlinkersButton.TabIndex = 16;
@@ -169,7 +137,7 @@ namespace CGoL
             // 
             // AcornButton
             // 
-            this.AcornButton.Location = new System.Drawing.Point(12, 165);
+            this.AcornButton.Location = new System.Drawing.Point(12, 104);
             this.AcornButton.Name = "AcornButton";
             this.AcornButton.Size = new System.Drawing.Size(74, 23);
             this.AcornButton.TabIndex = 17;
@@ -179,7 +147,7 @@ namespace CGoL
             // 
             // BigBlinkersButton
             // 
-            this.BigBlinkersButton.Location = new System.Drawing.Point(12, 364);
+            this.BigBlinkersButton.Location = new System.Drawing.Point(12, 426);
             this.BigBlinkersButton.Name = "BigBlinkersButton";
             this.BigBlinkersButton.Size = new System.Drawing.Size(74, 23);
             this.BigBlinkersButton.TabIndex = 18;
@@ -187,14 +155,10 @@ namespace CGoL
             this.BigBlinkersButton.UseVisualStyleBackColor = true;
             this.BigBlinkersButton.Click += new System.EventHandler(this.BigBlinkersButton_Click);
             // 
-            // BigSimulationTimer
-            // 
-            this.BigSimulationTimer.Tick += new System.EventHandler(this.BigSimulationTimer_Tick);
-            // 
             // BigBoardLabel
             // 
             this.BigBoardLabel.AutoSize = true;
-            this.BigBoardLabel.Location = new System.Drawing.Point(20, 337);
+            this.BigBoardLabel.Location = new System.Drawing.Point(20, 399);
             this.BigBoardLabel.Name = "BigBoardLabel";
             this.BigBoardLabel.Size = new System.Drawing.Size(50, 13);
             this.BigBoardLabel.TabIndex = 19;
@@ -202,7 +166,7 @@ namespace CGoL
             // 
             // BigAcornButton
             // 
-            this.BigAcornButton.Location = new System.Drawing.Point(12, 393);
+            this.BigAcornButton.Location = new System.Drawing.Point(12, 455);
             this.BigAcornButton.Name = "BigAcornButton";
             this.BigAcornButton.Size = new System.Drawing.Size(74, 23);
             this.BigAcornButton.TabIndex = 22;
@@ -236,14 +200,11 @@ namespace CGoL
             this.Controls.Add(this.GliderButton);
             this.Controls.Add(this.StepTimePicker);
             this.Controls.Add(this.StepTimeLabel);
-            this.Controls.Add(this.SizeLabel);
-            this.Controls.Add(this.SizePicker);
             this.Controls.Add(this.RenderTarget);
             this.Name = "Form1";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "CGoL";
             ((System.ComponentModel.ISupportInitialize)(this.RenderTarget)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.SizePicker)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.StepTimePicker)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
@@ -253,8 +214,6 @@ namespace CGoL
         #endregion
 
         private System.Windows.Forms.PictureBox RenderTarget;
-        private System.Windows.Forms.NumericUpDown SizePicker;
-        private System.Windows.Forms.Label SizeLabel;
         private System.Windows.Forms.Timer SimulationTimer;
         private System.Windows.Forms.Label StepTimeLabel;
         private System.Windows.Forms.NumericUpDown StepTimePicker;
@@ -264,7 +223,6 @@ namespace CGoL
         private System.Windows.Forms.Button BlinkersButton;
         private System.Windows.Forms.Button AcornButton;
         private System.Windows.Forms.Button BigBlinkersButton;
-        private System.Windows.Forms.Timer BigSimulationTimer;
         private System.Windows.Forms.Label BigBoardLabel;
         private System.Windows.Forms.Button BigAcornButton;
         private System.Windows.Forms.Button PromptButton;

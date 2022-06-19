@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-
-namespace CGoL.BigSim
+﻿namespace CGoL.BigSim
 {
     /// <summary>
     /// Representation of a single element in the big simulation. 

@@ -1,8 +1,9 @@
-﻿using SparseCollections;
+﻿using JetBrains.Annotations;
+using SparseCollections;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
-// TODO: Cleanup
 namespace CGoL.BigSim
 {
     /// <summary>
@@ -11,7 +12,11 @@ namespace CGoL.BigSim
     /// </summary>
     public class BigBoard
     {
-        Dictionary<long, Dictionary<long, BigCell>> Cells;
+        private const string c_BoardLabel = "BigBoard: ";
+        private const string c_LiveCellsLabel = "Live Cells";
+        private const string c_CoordinateXLabel = "X: ";
+        private const string c_CoordinateYLabel = ", Y: ";
+
         List<BigCell> CellsToAdd = new List<BigCell>();
 
         Sparse2DMatrix<long, long, BigCell> SparseCells;
@@ -21,14 +26,16 @@ namespace CGoL.BigSim
         /// </summary>
         public BigBoard()
         {
-            Cells = new Dictionary<long, Dictionary<long, BigCell>>();
             SparseCells = new Sparse2DMatrix<long, long, BigCell>();
         }
 
-        public string ToString()
+        /// <summary>
+        /// Used to display the state of the board at the end of every step.
+        /// </summary>
+        public override string ToString()
         {
             StringBuilder sb = new StringBuilder();
-            sb.AppendLine("Live Cells:");
+            sb.AppendLine(c_LiveCellsLabel);
 
             foreach (KeyValuePair<ComparableTuple2<long, long>, BigCell> entry in SparseCells)
             {
@@ -41,86 +48,36 @@ namespace CGoL.BigSim
                 long y = 0;
                 SparseCells.SeparateCombinedKeys(entry.Key, ref x, ref y);
 
-                sb.Append("X: " + x);
-                sb.AppendLine(", Y: " + y);
+                sb.Append(c_CoordinateXLabel);
+                sb.Append(x.ToString());
+                sb.Append(c_CoordinateYLabel);
+                sb.AppendLine(y.ToString());
             }
-
-            /*
-            foreach (KeyValuePair<long, Dictionary<long, BigCell>> entry in Cells)
-            {
-                foreach (KeyValuePair<long, BigCell> innerEntry in entry.Value)
-                {
-                    if (!innerEntry.Value.IsAlive)
-                    {
-                        continue;
-                    }
-
-                    sb.Append("X: ");
-                    sb.Append(entry.Key.ToString());
-                    sb.Append(", Y: ");
-                    sb.AppendLine(innerEntry.Key.ToString());
-                }
-            }
-            */
 
             return sb.ToString();
         }
 
+        // TODO: Reduce this to one signature
+        /// <summary>
+        /// Adds a new living cell at the given (x, y) coordinate to the simulation.
+        /// </summary>
         public void AddCell(long x, long y)
         {
-            /*
-            BigCell bigCell = new BigCell(x, y);
-
-            if (!Cells.ContainsKey(x))
-            {
-                Cells.Add(x, new Dictionary<long, BigCell>());
-            }
-
-            if (!Cells[x].ContainsKey(y))
-            {
-                Cells[x].Add(y, bigCell);
-            }
-            */
-
             SparseCells[x, y] = new BigCell(x, y);
         }
 
         public void AddCell(BigCell bigCell)
         {
-            /*
-            if (!Cells.ContainsKey(bigCell.x))
-            {
-                Cells.Add(bigCell.x, new Dictionary<long, BigCell>());
-            }
-
-            if (!Cells[bigCell.x].ContainsKey(bigCell.y))
-            {
-                Cells[bigCell.x].Add(bigCell.y, null);
-            }
-            Cells[bigCell.x][bigCell.y] = bigCell;
-            */
-
             SparseCells[bigCell.x, bigCell.y] = bigCell;
         }
 
-        public int GetLiveCellCount()
+        /// <summary>
+        /// Used to determine the end of the simulation at the end of every step.
+        /// </summary>
+        /// TODO: This can be a running count instead of iterating over the simulation
+        private int GetLiveCellCount()
         {
             int liveCells = 0;
-
-            /*
-            foreach (KeyValuePair<long, Dictionary<long, BigCell>> entry in Cells)
-            {
-                foreach (KeyValuePair<long, BigCell> innerEntry in entry.Value)
-                {
-                    if (!innerEntry.Value.IsAlive)
-                    {
-                        continue;
-                    }
-
-                    liveCells++;
-                }
-            }
-            */
 
             foreach (KeyValuePair<ComparableTuple2<long, long>, BigCell> entry in SparseCells)
             {
@@ -134,26 +91,17 @@ namespace CGoL.BigSim
             return liveCells;
         }
 
-        public BigCell GetCell(long x, long y)
+        /// <summary>
+        /// Retrieves the cell at the given (x, y) coordinate.
+        /// </summary>
+        [CanBeNull]
+        private BigCell GetCell(long x, long y)
         {
-            /*
-            if (!Cells.ContainsKey(x))
-            {
-                return null;
-            }
-
-            if (!Cells[x].ContainsKey(y))
-            {
-                return null;
-            }
-            
-            return Cells[x][y];
-            */
-
             return SparseCells[x, y];
         }
 
-        public BigCell GetCellToAdd(long x, long y)
+        // TODO: Can I get rid of this tracking list?
+        private BigCell GetCellToBeAdded(long x, long y)
         {
             // TODO: Can this go away now with sparse arrays?
             foreach (BigCell cell in CellsToAdd)
@@ -167,7 +115,8 @@ namespace CGoL.BigSim
             return null;
         }
 
-        public void EvaluateIfAlive(long x, long y)
+        // TODO: Reduce these two to one call?
+        private void EvaluateIfAlive(long x, long y)
         {
             BigCell cell = GetCell(x, y);
             if (cell != null && cell.IsAlive)
@@ -177,7 +126,7 @@ namespace CGoL.BigSim
             }
         }
 
-        public void EvaluateIfDead(long x, long y)
+        private void EvaluateIfDead(long x, long y)
         {
             BigCell cell = GetCell(x, y);
             if (cell != null && cell.IsAlive)
@@ -185,7 +134,7 @@ namespace CGoL.BigSim
                 return;
             }
 
-            cell = GetCellToAdd(x, y);
+            cell = GetCellToBeAdded(x, y);
             if (cell != null && cell.IsAlive)
             {
                 return;
@@ -198,7 +147,7 @@ namespace CGoL.BigSim
             }
         }
 
-        public int GetLiveNeighborCount(long x, long y)
+        private int GetLiveNeighborCount(long x, long y)
         {
             BigCell topLeft = SparseCells[x - 1, y - 1];
             BigCell topCenter = SparseCells[x, y - 1];
@@ -243,107 +192,31 @@ namespace CGoL.BigSim
                 neighbors++;
             }
 
-            /*
-            // TODO: Clean up this function to be less nested
-            int neighbors = 0;
-            if (Cells.ContainsKey(x))
-            {
-                if (Cells[x].ContainsKey(y - 1))
-                {
-                    if (Cells[x][y - 1].IsAlive)
-                    {
-                        neighbors++;
-                    }
-                    
-                }
-                if (Cells[x].ContainsKey(y + 1))
-                {
-                    if (Cells[x][y + 1].IsAlive)
-                    {
-                        neighbors++;
-                    }
-                }
-            }
-
-            if (Cells.ContainsKey(x - 1))
-            {
-                if (Cells[x - 1].ContainsKey(y - 1))
-                {
-                    if (Cells[x - 1][y - 1].IsAlive)
-                    {
-                        neighbors++;
-                    }
-                }
-                if (Cells[x - 1].ContainsKey(y))
-                {
-                    if (Cells[x - 1][y].IsAlive)
-                    {
-                        neighbors++;
-                    }
-                }
-                if (Cells[x - 1].ContainsKey(y + 1))
-                {
-                    if (Cells[x - 1][y + 1].IsAlive)
-                    {
-                        neighbors++;
-                    }
-                }
-            }
-
-            if (Cells.ContainsKey(x + 1))
-            {
-                if (Cells[x + 1].ContainsKey(y - 1))
-                {
-                    if (Cells[x + 1][y - 1].IsAlive)
-                    {
-                        neighbors++;
-                    }
-                }
-                if (Cells[x + 1].ContainsKey(y))
-                {
-                    if (Cells[x + 1][y].IsAlive)
-                    {
-                        neighbors++;
-                    }
-                }
-                if (Cells[x + 1].ContainsKey(y + 1))
-                {
-                    if (Cells[x + 1][y + 1].IsAlive)
-                    {
-                        neighbors++;
-                    }
-                }
-            }
-            */
-
             return neighbors;
         }
 
-        public void PreStep()
+        /// <summary>
+        /// Advance the simulation forward one step.
+        /// </summary>
+        public void Step()
         {
-            /*
-            foreach (KeyValuePair<long, Dictionary<long, BigCell>> entry in Cells)
+            if (GetLiveCellCount() == 0)
             {
-                foreach (KeyValuePair<long, BigCell> innerEntry in entry.Value)
-                {
-                    //  Figure out the state for the current living cell
-                    EvaluateIfAlive(innerEntry.Value.x, innerEntry.Value.y);
-
-                    //  Find any neighboring dead cell and try to recessitate it!
-                    EvaluateIfDead(innerEntry.Value.x - 1, innerEntry.Value.y - 1);
-                    EvaluateIfDead(innerEntry.Value.x - 1, innerEntry.Value.y);
-                    EvaluateIfDead(innerEntry.Value.x - 1, innerEntry.Value.y + 1);
-
-                    EvaluateIfDead(innerEntry.Value.x, innerEntry.Value.y - 1);
-                    EvaluateIfDead(innerEntry.Value.x, innerEntry.Value.y + 1);
-
-                    EvaluateIfDead(innerEntry.Value.x + 1, innerEntry.Value.y - 1);
-                    EvaluateIfDead(innerEntry.Value.x + 1, innerEntry.Value.y);
-                    EvaluateIfDead(innerEntry.Value.x + 1, innerEntry.Value.y + 1);
-                }
+                return;
             }
-            */
 
+            Console.WriteLine(c_BoardLabel);
+            Console.WriteLine(ToString());
+            PreStepCells();
+            StepCells();
+        }
+
+        /// <summary>
+        /// Prepare the active cells in the simulation for the next step. Also looks at neighboring cells to
+        /// living cells in order to determine their status.
+        /// </summary>
+        private void PreStepCells()
+        {
             foreach (KeyValuePair<ComparableTuple2<long, long>, BigCell> entry in SparseCells)
             {
                 long x = 0;
@@ -367,31 +240,22 @@ namespace CGoL.BigSim
             }
         }
 
-        public void Step()
+        /// <summary>
+        /// Finalizes the step in the simulation.
+        /// </summary>
+        private void StepCells()
         {
             foreach (KeyValuePair<ComparableTuple2<long, long>, BigCell> entry in SparseCells)
             {
                 entry.Value.IsAlive = entry.Value.WillBeAlive;
             }
 
-            /*
-            foreach (KeyValuePair<long, Dictionary<long, BigCell>> entry in Cells)
-            {
-                foreach (KeyValuePair<long, BigCell> innerEntry in entry.Value)
-                {
-                    innerEntry.Value.IsAlive = innerEntry.Value.WillBeAlive;
-                }
-            }
-            */
-
+            // TODO: remove the need for this step
             foreach (BigCell cellToAdd in CellsToAdd)
             {
                 AddCell(cellToAdd);
             }
             CellsToAdd.Clear();
-
-            // TODO: Clean up any empty dictionaries to reduce memory footprint at the cost of extra operations
-            //       onto the double-dictionaries
         }
     }
 }

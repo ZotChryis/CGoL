@@ -3,7 +3,6 @@ using System;
 using System.Drawing;
 using System.Windows.Forms;
 using System.Collections.Generic;
-using System.Runtime.InteropServices;
 using CGoL.BigSim;
 
 namespace CGoL
@@ -14,25 +13,59 @@ namespace CGoL
     public partial class Form1 : Form
     {
         /// <summary>
+        /// The size of each cell in pixels (width and height).
+        /// </summary>
+        private const int c_CellSize = 5;
+
+        /// <summary>
         /// The simulated board of CGoL that is drawn to render target.
         /// </summary>
         private Board Board;
 
-
+        /// <summary>
+        /// The simulated board of CGoL that allows for 64-bit coordinate space.
+        /// DOES NOT draw onto the GUI, instead it prints the state of the board into console.
+        /// </summary>
         private BigBoard BigBoard;
 
         public Form1()
         {
             InitializeComponent();
             Reset();
+            ResetBigBoard();
         }
+
+        #region Shared
+
+        /// <summary>
+        /// Advances the simulation step at every timer tick.
+        /// </summary>
+        private void SimulationTimer_Tick(object sender, EventArgs e)
+        {
+            Board.Step();
+            BigBoard.Step();
+
+            Draw();
+        }
+
+        /// <summary>
+        /// Changes the interval at which the simulation is stepped through.
+        /// </summary>
+        private void StepTimePicker_ValueChanged(object sender, EventArgs e)
+        {
+            SimulationTimer.Interval = (int)StepTimePicker.Value;
+        }
+
+        #endregion
+
+        #region Board
 
         /// <summary>
         /// Clears out the current CGoL simulation.
         /// </summary>
         private void Reset()
         {
-            Board = new Board(RenderTarget.Width, RenderTarget.Height, (int)SizePicker.Value, true);
+            Board = new Board(RenderTarget.Width, RenderTarget.Height, c_CellSize, true);
             Draw();
         }
 
@@ -50,6 +83,7 @@ namespace CGoL
             if (offsetToCenter)
             {
                 //  Iterate through to find the minimum and maximum x and y values
+                //  Note: This O(N) search can be eliminated if the input data was aware and provided these values
                 int minX = int.MaxValue;
                 int minY = int.MaxValue;
                 int maxX = int.MinValue;
@@ -231,47 +265,31 @@ namespace CGoL
                 new Board.CellLocation {x = 6, y = 2 },
                 new Board.CellLocation {x = 7, y = 2 }
             };
+
             Reset(liveCells);
         }
 
         /// <summary>
-        /// Advances the simulation step at every timer tick.
-        /// </summary>
-        private void SimulationTimer_Tick(object sender, EventArgs e)
-        {
-            Board.Step();
-            Draw();
-        }
-
-        /// <summary>
-        /// Changes the interval at which the simulation is stepped through.
-        /// </summary>
-        private void StepTimePicker_ValueChanged(object sender, EventArgs e)
-        {
-            SimulationTimer.Interval = (int)StepTimePicker.Value;
-        }
-
-        /// <summary>
         /// Resets the simulation whenever the render target bounds are changed.
-        /// TODO: Make this non-disruptive by calculating the new image?
+        /// TODO: Make this non-disruptive by calculating the new image instead of forcing a reset.
         /// </summary>
         private void RenderTarget_SizeChanged(object sender, EventArgs e)
         {
             Reset();
         }
 
-        /// <summary>
-        /// Resets the simulation whenever the cell size changes.
-        /// TODO: Make this non-disruptive by calculating the new image?
-        /// </summary>
-        private void SizePicker_ValueChanged(object sender, EventArgs e)
+        #endregion
+
+        #region BigBoard
+
+        private void ResetBigBoard()
         {
-            Reset();
+            BigBoard = new BigBoard();
         }
 
         private void BigBlinkersButton_Click(object sender, EventArgs e)
         {
-            BigBoard = new BigBoard();
+            ResetBigBoard();
 
             BigBoard.AddCell(0, 0);
             BigBoard.AddCell(0, 1);
@@ -282,27 +300,11 @@ namespace CGoL
             BigBoard.AddCell(8, 0);
             BigBoard.AddCell(8, 1);
             BigBoard.AddCell(8, 2);
-
-            BigSimulationTimer.Enabled = true;
-        }
-
-        private void BigSimulationTimer_Tick(object sender, EventArgs e)
-        {
-            Console.WriteLine("BigBoard:");
-            Console.WriteLine(BigBoard.ToString());
-            BigBoard.PreStep();
-            BigBoard.Step();
-
-            if (BigBoard.GetLiveCellCount() == 0)
-            {
-                Console.WriteLine("All life is gone.");
-                BigSimulationTimer.Enabled = false;
-            }
         }
 
         private void BigAcornButton_Click(object sender, EventArgs e)
         {
-            BigBoard = new BigBoard();
+            ResetBigBoard();
 
             BigBoard.AddCell(2, 0);
             BigBoard.AddCell(4, 1);
@@ -311,13 +313,11 @@ namespace CGoL
             BigBoard.AddCell(5, 2);
             BigBoard.AddCell(6, 2);
             BigBoard.AddCell(7, 2);
-
-            BigSimulationTimer.Enabled = true;
         }
 
         private void PromptButton_Click(object sender, EventArgs e)
         {
-            BigBoard = new BigBoard();
+            ResetBigBoard();
 
             BigBoard.AddCell(0, 1);
             BigBoard.AddCell(1, 2);
@@ -326,8 +326,8 @@ namespace CGoL
             BigBoard.AddCell(2, 2);
             BigBoard.AddCell(-2000000000000, -2000000000000);
             BigBoard.AddCell(-2000000000001, -2000000000001);
-
-            BigSimulationTimer.Enabled = true;
         }
+
+        #endregion
     }
 }

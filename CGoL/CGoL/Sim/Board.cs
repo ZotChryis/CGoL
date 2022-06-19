@@ -107,7 +107,6 @@ namespace CGoL.Sim
         /// <summary>
         /// The process of moving the simulation forward.
         /// </summary>
-        // TODO: Is there a way to not interate over twice O(2N) ?
         public void Step()
         {
             foreach (Cell cell in Cells)
