@@ -12,7 +12,7 @@ This project has two implementations of Conway's Game of Life and was created in
   - Simulation is visualized in the GUI's picture box.
 
 ## BigBoard.cs & BigBoard.cs
-![cgol_bb](https://user-images.githubusercontent.com/3958827/174498894-b392ea76-c967-4c58-afad-7ffc52ad8423.gif)
+![cgol_bb](https://user-images.githubusercontent.com/3958827/174499276-7bb6636c-faca-4dbf-8798-282af37d99ee.gif)
   - Stores the simulation in a Sparse 2D array. 
     - Supporting int64 coordinate space.
     - Initially stored as nested dictionaries, which Sparse 2D array takes to another level for usability. 
