@@ -1,4 +1,4 @@
-# Conway's Game of Life Simulation
+# Conway's Game of Life Simulation (C# & Winforms)
 
 This project has two implementations of Conway's Game of Life and was created in a total of 8h spread across two days for an interview test.
 
