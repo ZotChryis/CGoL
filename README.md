@@ -5,8 +5,7 @@ This project has two implementations of Conway's Game of Life and was created in
 ## Board.cs & Cell.cs
 ![cgol](https://user-images.githubusercontent.com/3958827/174498652-17a94e35-b90d-4fea-af3c-2729ef58449d.gif)
   - Stores the simulation in a 2D array.
-    - Only supporting int32 coordinate space.
-  - Size of the simulation is dictated by the size of the GUI's picture box.
+    - Could support int32 coordinate space but size of the simulation is dictated by the size of the GUI's picture box.
   - GUI has buttons to create a variety of presets under the label _Presets_.
   - Simulation respects the _Step Time_ (milliseconds) from the GUI.
   - Simulation is visualized in the GUI's picture box.
