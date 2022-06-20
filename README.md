@@ -11,7 +11,7 @@ This project has two implementations of Conway's Game of Life and was created in
   - Simulation respects the _Step Time_ (milliseconds) from the GUI.
   - Simulation is visualized in the GUI's picture box.
 
-## BigBoard.cs & BigBoard.cs
+## BigBoard.cs & BigCell.cs
 ![cgol_bb](https://user-images.githubusercontent.com/3958827/174499276-7bb6636c-faca-4dbf-8798-282af37d99ee.gif)
   - Stores the simulation in a Sparse 2D array. 
     - Supporting int64 coordinate space.
