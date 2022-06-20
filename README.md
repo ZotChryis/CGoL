@@ -6,16 +6,17 @@ This project has two implementations of Conway's Game of Life and was created in
 ![cgol](https://user-images.githubusercontent.com/3958827/174498652-17a94e35-b90d-4fea-af3c-2729ef58449d.gif)
   - Stores the simulation in a 2D array.
     - Could support int32 coordinate space but size of the simulation is dictated by the size of the GUI's picture box.
+    - Simulation space wraps at the edges.
   - GUI has buttons to create a variety of presets under the label _Presets_.
   - Simulation respects the _Step Time_ (milliseconds) from the GUI.
   - Simulation is visualized in the GUI's picture box.
+  - Heavily influenced by [Scott H Harden's](https://swharden.com/) visualization.
 
 ## BigBoard.cs & BigCell.cs
 ![cgol_bb](https://user-images.githubusercontent.com/3958827/174499276-7bb6636c-faca-4dbf-8798-282af37d99ee.gif)
   - Stores the simulation in a Sparse 2D array. 
     - Supporting int64 coordinate space.
-    - Initially stored as nested dictionaries, which Sparse 2D array takes to another level for usability. 
-    - Sparse 2D array implementation: https://www.codeproject.com/Articles/673055/Generic-Sparse-Array-and-Sparse-Matrices-in-Csharp
+    - Initially stored as nested dictionaries, which [Sparse 2D arrays](https://www.codeproject.com/Articles/673055/Generic-Sparse-Array-and-Sparse-Matrices-in-Csharp) takes to another level for usability. 
   - Size of the simulation is unrelated to the GUI.
   - GUI has buttons to create a variety of presets under the label _BigBoard_.
     - The sample input in the test question be spun up with the _Prompt_ button.
