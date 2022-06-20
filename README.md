@@ -1,6 +1,6 @@
 # Conway's Game of Life Simulation (C# & Winforms)
 
-This project has two implementations of Conway's Game of Life and was created in a total of 8h spread across two days for an interview test.
+This project has two implementations of Conway's Game of Life and was created in a total of 8h spread across two days.
 
 ## Board.cs & Cell.cs
 ![cgol](https://user-images.githubusercontent.com/3958827/174498652-17a94e35-b90d-4fea-af3c-2729ef58449d.gif)
